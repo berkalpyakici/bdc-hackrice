@@ -3,7 +3,7 @@ const BDC_username = "bay+sandbox.rice@edu.";
 const BDC_password = "Bdctest123";
 const BDC_devKey = "01JFJIGOPULHADWJD201";
 const BDC_env = "sandbox";
-const BDC_orgId = '0122431483746940';
+const BDC_orgId = '3D00801ZVAIUEZDYTOIme7';
 
 
 const BDC = require('./../BDCClientLibrary')(username, password, devKey, env);

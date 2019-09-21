@@ -112,13 +112,4 @@ app.intent('instructions', (conv) => {
   }));
 });
 
-app.intent('list-overnight-payments', (conv) => {
-  conv.ask('Here are the payments you received overnight.');
-  conv.ask(new HtmlResponse({
-    data: {
-      command: 'PAYMENTS',
-    },
-  }));
-});
-
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
