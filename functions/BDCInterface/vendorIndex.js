@@ -1,5 +1,12 @@
 var exports = module.exports = {};
 
+String.prototype.format = function () {
+    var i = 0, args = arguments[0];
+    return this.replace(/{}/g, function () {
+        return typeof args[i] != 'undefined' ? args[i++] : '';
+    });
+};
+
 async function getVendors(){
     const BDC = await require('./authentication.js')();
     const endpoint = '/List/Vendor.json';
@@ -18,14 +25,22 @@ async function getVendors(){
 async function vendorStatus(){
     const BDC = await require('./authentication.js')();
     const endpoint = '/GetNetworkStatus.json';
-    var vendors = await getVendors();
-    var original = "This is the update from all your vendors.";
-    var number_to_status = {0: "not connected", 1: "pending connection", 2:"connected"};
-    for(var vendor in vendors){
-        var id = vendors[vendor].id;
-        let netStat = await BDC.makeRequest(endpoint, JSON.stringify({"id": id}));
 
+    var vendors = await getVendors();
+    var original = "This is the update from all your vendors. ";
+    var number_to_status = {0: "not connected", 1: "pending connection", 2:"connected"};
+
+    var columns = ["Name", "Company", "Status"];
+    var rows = [];
+    for(var vendor in vendors){
+        var the_vendor = vendors[vendor];
+        let netStat = await BDC.makeRequest(endpoint, JSON.stringify({"id": the_vendor.id}));
+        var row = [the_vendor.name, the_vendor.companyName, number_to_status[netStat.status]];
+        original += "{} from the company {} is {} to your network.".format(row);
+        console.log(original);
+        rows.push(row);
     }
+    return [original, columns, rows];
 
 }
 
