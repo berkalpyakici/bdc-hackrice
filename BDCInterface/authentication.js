@@ -7,11 +7,14 @@ const BDC_orgId = '00801ZVAIUEZDYTOIme7';
 
 const BDC = require('./../BDCClientLibrary')(BDC_username, BDC_password, BDC_devKey, BDC_env);
 
-(async () => {
+module.exports = async () => {
     try {
         await BDC.Auth.login(BDC_orgId);
+	console.log('Authentication successful.');
+	return BDC;
 
     } catch (err) {
         console.log(err);
+	return null;
     }
-})();
+};
