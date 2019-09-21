@@ -124,7 +124,7 @@ app.intent('bdc vendor invites', async (conv) => {
   });
 
 //Show upcoming bills
-app.intent('bdc get bills', (conv) => {
+app.intent('bdc get bills', async(conv) => {
   try {
     const response = await require('./BDCInterface/recurringBillTest.js');
     conv.ask("Here is a list of your upcoming bills:");
