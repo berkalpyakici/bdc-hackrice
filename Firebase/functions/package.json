@@ -1,0 +1,14 @@
+{
+  "name": "canvas-sample-functions",
+  "description": "Actions on Google Interactive Canvas Sample Functions",
+  "license": "Apache-2.0",
+  "private": true,
+  "engines": {
+    "node": "8"
+  },
+  "dependencies": {
+    "actions-on-google": "^2.10.0",
+    "firebase-admin": "~8.0.0",
+    "firebase-functions": "^3.1.0"
+  }
+}
