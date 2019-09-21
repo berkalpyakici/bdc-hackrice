@@ -46,10 +46,6 @@ async function vendorAdded() {
 
 }
 
-
-exports.vendorStatus = vendorStatus();
-exports.getVendors = getVendors();
-
 (async () => {
     try{
         let a = await vendorStatus();
@@ -60,3 +56,6 @@ exports.getVendors = getVendors();
 
     }
 })();
+
+exports.vendorStatus = vendorStatus;
+exports.getVendors = getVendors;
