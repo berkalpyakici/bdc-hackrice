@@ -92,6 +92,19 @@ app.intent('normal ask', (conv) => {
   conv.ask('Ask me to show you a list, carousel, or basic card.');
 });
 
+// Show Organization ID
+app.intent('bdc organization id', async (conv) => {
+    try {
+        const response = await require('./BDCInterface/getSessionInfo.js')();
+        conv.ask('Your Bill.com organization ID is ' + response['organizationId'] + '.');
+    } catch (e) {
+        console.log(e);
+        conv.ask('Something went wrong while accessing to Bill.com services.');
+    }
+
+    conv.ask('Is there anything else I can help you with?');
+});
+
 // Suggestions
 app.intent('suggestions', (conv) => {
   conv.ask('This is an example of suggestion chips.');
