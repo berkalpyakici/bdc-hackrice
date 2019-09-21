@@ -1,17 +1,16 @@
 /* Credentials */
-const BDC_username = "bay+sandbox.rice@edu.";
-const BDC_password = "Bdctest123";
+const BDC_username = "bay+sandbox@rice.edu";
+const BDC_password = "Billtest123";
 const BDC_devKey = "01JFJIGOPULHADWJD201";
 const BDC_env = "sandbox";
-const BDC_orgId = '3D00801ZVAIUEZDYTOIme7';
+const BDC_orgId = '00801ZVAIUEZDYTOIme7';
 
 
-const BDC = require('./../BDCClientLibrary')(username, password, devKey, env);
+const BDC = require('./../BDCClientLibrary')(BDC_username, BDC_password, BDC_devKey, BDC_env);
 
 (async () => {
     try {
-        console.log("test");
-        await BDC.Auth.login(orgId);
+        await BDC.Auth.login(BDC_orgId);
 
     } catch (err) {
         console.log(err);
