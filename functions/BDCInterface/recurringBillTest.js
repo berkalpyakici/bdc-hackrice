@@ -12,14 +12,13 @@ try {
    "sort" : []
 }
     data = await BDC.Bill.list(params);
+    list = [{"name":"HI"}]
     for (i=0;i<data.length;i++){
       vendor = await BDC.Vendor.read(data[i].vendorId);
-      billDatum = [vendor.name,data[i].amount,data[i].dueDate,data[i].description];
-      list.push(billDatum);
-      list.push(billDatum);
+      billDatum = {"amount":data[i].amount,"dueDate":data[i].dueDate,"description":data[i].description,"vendor":vendor.name};
+      list += billDatum;
     }
-    console.log(list);
-
+    
   module.exports = list;
 } catch (err) {
     console.log(err);

@@ -121,6 +121,23 @@ app.intent('bdc vendor invites', async (conv) => {
     }
 
     conv.ask('Is there anything else I can help you with?');
+  });
+
+//Show upcoming bills
+app.intent('bdc get bills', (conv) => {
+  try {
+    const response = await require('./BDCInterface/recurringBillTest.js')();
+    conv.ask("Here is a list of your upcoming bills:");
+    conv.ask(new Table({
+      dividers: true,
+      columns: ['Vendor', 'Amount', 'Due Date','Description'],
+      rows: response,
+    }));
+  } catch(e) {
+    console.log(e);
+    conv.ask('');
+  }
+  conv.ask("How can I make your day better my guy");
 });
 
 // Suggestions
