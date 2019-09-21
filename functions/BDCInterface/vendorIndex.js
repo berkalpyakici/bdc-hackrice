@@ -44,16 +44,5 @@ async function vendorStatus(){
 
 }
 
-exports.vendorStatus = vendorStatus();
-exports.getVendors = getVendors();
-
-(async () => {
-    try{
-        let a = await vendorStatus();
-        console.log("this is the past");
-    }
-    catch (err) {
-        console.log(err);
-
-    }
-})();
+exports.vendorStatus = vendorStatus;
+exports.getVendors = getVendors;
