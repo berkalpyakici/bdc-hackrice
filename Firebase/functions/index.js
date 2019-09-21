@@ -92,13 +92,31 @@ app.intent('pause', (conv) => {
   }));
 });
 
+app.intent('timer', (conv) => {
+  conv.ask(`Ok, I'll ask you again in 5 seconds`);
+  conv.ask(new HtmlResponse({
+    suppress: true,
+    data: {
+      timer: 5,
+    },
+  }));
+});
+
+app.intent('instructions', (conv) => {
+  conv.ask('Do you want me to change color or pause spinning? ' +
+    'You can also tell me to ask you later.');
+  conv.ask(new HtmlResponse({
+    data: {
+      instructions: true,
+    },
+  }));
+});
+
 app.intent('list-overnight-payments', (conv) => {
   conv.ask('Here are the payments you received overnight.');
   conv.ask(new HtmlResponse({
     data: {
       command: 'PAYMENTS',
-      action: 'list',
-      time: '-12',
     },
   }));
 });
