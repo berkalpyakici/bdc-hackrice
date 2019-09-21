@@ -22,6 +22,7 @@
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "eslint": "^4.19.0",
     "eslint-config-google": "^0.9.1",
     "jasmine": "^3.4.0"
