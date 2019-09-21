@@ -1,5 +1,5 @@
 var exports = module.exports = {};
-
+var number_to_status = {0: "not connected", 1: "pending connection", 2:"connected"};
 String.prototype.format = function () {
     var i = 0, args = arguments[0];
     return this.replace(/{}/g, function () {
@@ -28,7 +28,6 @@ async function vendorStatus(){
 
     var vendors = await getVendors();
     var original = "This is the update from all your vendors. ";
-    var number_to_status = {0: "not connected", 1: "pending connection", 2:"connected"};
 
     var columns = ["Name", "Company", "Status"];
     var rows = [];
@@ -41,8 +40,12 @@ async function vendorStatus(){
         rows.push(row);
     }
     return [original, columns, rows];
+}
+
+async function vendorAdded() {
 
 }
+
 
 exports.vendorStatus = vendorStatus();
 exports.getVendors = getVendors();
