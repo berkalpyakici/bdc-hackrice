@@ -80,10 +80,10 @@ app.middleware((conv) => {
 
 app.intent('Default Welcome Intent', (conv) => {
   conv.ask(new SimpleResponse({
-    speech: 'I can show you basic cards, lists, and more ' +
-      'on your phone and smart display.',
-    text: 'I can show you basic cards, lists, and more ' +
-      'on your phone and smart display.',
+    speech: 'Hi, I am your Bill.com assistant. ' +
+      'How can I help you today?',
+    text: 'Hi, I am your Bill.com assistant. ' +
+      'How can I help you today?',
   }));
   conv.ask(new Suggestions(intentSuggestions));
 });

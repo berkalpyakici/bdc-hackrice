@@ -10,6 +10,7 @@ const BDC = require('./../BDCClientLibrary')(username, password, devKey, env);
 
 (async () => {
     try {
+        console.log("test");
         await BDC.Auth.login(orgId);
 
     } catch (err) {
