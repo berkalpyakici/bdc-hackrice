@@ -1,5 +1,5 @@
 var exports = module.exports = {};
-var number_to_status = {0: "not connected", 1: "pending connection", 2:"connected"};
+var number_to_status = {0: "Not Connected", 1: "Pending Connection", 2:"Connected"};
 String.prototype.format = function () {
     var i = 0, args = arguments[0];
     return this.replace(/{}/g, function () {
@@ -27,20 +27,23 @@ async function vendorStatus() {
     const endpoint = '/GetNetworkStatus.json';
 
     var vendors = await getVendors();
-    var original = "This is the update from all your vendors. ";
+    var original = "This is the update from all your vendors: ";
 
     var columns = ["Name", "Company", "Status"];
     var rows = [];
-    for(var vendor in vendors){
+
+    for (var vendor in vendors) {
         var the_vendor = vendors[vendor];
         let netStat = await BDC.makeRequest(endpoint, JSON.stringify({"id": the_vendor.id}));
+
         console.log(netStat);
         console.log("returned");
-        var row = [the_vendor.name, the_vendor.companyName, number_to_status[netStat.status]];
-        original += "{} from the company {} is {} to your network.".format(row);
-        console.log(original);
+        
+        var row = [the_vendor.name ? the_vendor.name : 'N/A', the_vendor.companyName ? the_vendor.companyName : 'N/A', number_to_status[netStat.status]];
+        original += "{} from the {} is {} to your network. ".format(row);
         rows.push(row);
     }
+
     return [original, columns, rows];
 }
 
