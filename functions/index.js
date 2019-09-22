@@ -161,6 +161,22 @@ app.intent('bdc bills', async (conv, {type}) => {
     conv.ask('Is there anything else?');
 });
 
+app.intent('bdc invoices', async (conv, {type}) => {
+    try {
+        const response = await require('./BDCInterface/getInvoices')();
+        conv.ask(response[0]);
+        conv.ask(new Table({
+            dividers: true,
+            columns: ["Customer","Status","Amount"],
+            rows: response
+        }))
+        } catch(e) {
+        console.log(e);
+        conv.ask('Something went wrong while accessing Bill.com services. ');
+        }
+        conv.ask('Is there anything else?');
+});
+
 const appStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://apps.apple.com/us/app/bill-com/id980353334';
 const playStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://play.google.com/store/apps/details?id=com.bdc.bill';
 
