@@ -24,7 +24,7 @@ module.exports = async function(inputStatus) {
         if(inputStatus == 'all') {
             var response = await BDC.Bill.list({"sort": [{"field": "updatedTime", "asc": 0}]});
         } else {
-            var response = await BDC.Bill.list({"approvalStatus": statuses[inputStatus], "sort": [{"field": "dueDate", "asc": 0}]});
+            var response = await BDC.Bill.list({"approvalStatus": statuses[inputStatus].toString(), "sort": [{"field": "dueDate", "asc": 0}]});
         }
 
         const strings = {'all': "Here are all your bills sorted by approval.", 'unassigned': "Here are all your unassigned bills.", 'assigned': "Here are all your assigned bills.",
