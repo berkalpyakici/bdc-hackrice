@@ -99,7 +99,7 @@ app.intent('normal ask', (conv) => {
 // Show Organization ID
 app.intent('bdc organization id', async (conv) => {
     try {
-        const response = await require('./BDCInterface/getSessionInfo.js')();
+        const response = await require('./BDCInterface/getSessionInfo')();
         conv.ask('Your Bill.com organization ID is ' + response['organizationId'] + '.');
     } catch (e) {
         console.log(e);
@@ -127,11 +127,11 @@ app.intent('bdc vendor invites', async (conv) => {
     conv.ask('Is there anything else I can help you with?');
   });
 
-//Show recurring bills
+//Show upcoming bills
 app.intent('bdc get recurring bills', async (conv) => {
   try {
     const response = await require('./BDCInterface/getRecurringBills')();
-    conv.ask("Here is a list of your recurring bills.");
+    conv.ask("Here is a list of your upcoming bills.");
     conv.ask(new Table({
       dividers: true,
       columns: ['Vendor', 'Amount', 'Due Date', 'Description'],
@@ -141,7 +141,7 @@ app.intent('bdc get recurring bills', async (conv) => {
     console.log(e);
     conv.ask('Something went wrong while accessing to Bill.com services. ');
   }
-  conv.ask("How can I make your day better my guy?");
+  conv.ask("How can I make your day better my guy");
 });
 
 //Show bill approval process
@@ -196,6 +196,7 @@ app.intent('Redirect to App', (conv) => {
   })),
   conv.ask(' ');
 });
+
 // Suggestions
 app.intent('suggestions', (conv) => {
   conv.ask('This is an example of suggestion chips.');
