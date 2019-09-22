@@ -1,0 +1,32 @@
+{
+  "name": "bdc-application",
+  "description": "A simple sample showing the visual conversation components available with Actions on Google using Dialogflow",
+  "version": "0.0.1",
+  "private": true,
+  "license": "Apache Version 2.0",
+  "author": "Google Inc.",
+  "engines": {
+    "node": "8"
+  },
+  "scripts": {
+    "lint": "eslint --fix \"**/*.js\"",
+    "start": "firebase serve",
+    "deploy": "firebase deploy",
+    "test": "npm run lint"
+  },
+  "dependencies": {
+    "actions-on-google": "^2.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "firebase-admin": "^7.2.0",
+    "firebase-functions": "^2.2.1",
+    "form-urlencoded": "^4.0.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^4.19.0",
+    "eslint-config-google": "^0.9.1",
+    "jasmine": "^3.4.0"
+  }
+}

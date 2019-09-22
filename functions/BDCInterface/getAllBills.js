@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = async function() {
     try {
         const BDC = await require('./authentication.js')();
 

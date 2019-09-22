@@ -17,7 +17,7 @@ module.exports = async function(inputStatus) {
             "approving": 4,
             "approved": 3,
             "denied": 5
-        }
+        };
 
         const statuses_response = {6: "All", 0: "Unassigned", 1: "Assigned", 4: "Approving", 3: "Approved", 5: "Denied"};
 

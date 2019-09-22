@@ -38,7 +38,7 @@ async function vendorStatus() {
 
         console.log(netStat);
         console.log("returned");
-        
+
         var row = [the_vendor.name ? the_vendor.name : 'N/A', the_vendor.companyName ? the_vendor.companyName : 'N/A', number_to_status[netStat.status]];
         original += "{} from the {} is {} to your network. ".format(row);
         rows.push(row);
