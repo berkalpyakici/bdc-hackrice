@@ -37,7 +37,7 @@ const {
     vendorId,
     customerId
 } = require('../testConfig');
-const BDC = require('../../index')(username, password, devKey, env);
+const BDC = require('../index')(username, password, devKey, env);
 const Auth = require('../lib/Auth');
 const Vendor = require('../lib/Vendor');
 const VendorEntity = require('../lib/Entities/VendorEntity');

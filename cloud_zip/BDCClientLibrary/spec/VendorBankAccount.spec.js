@@ -29,7 +29,7 @@ const {
     env,
     vendorBankAccountId
 } = require('../testConfig');
-const BDC = require('../../index')(username, password, devKey, env);
+const BDC = require('../index')(username, password, devKey, env);
 const Auth = require('../lib/Auth');
 const VendorBankAccount = require('../lib/VendorBankAccount');
 const VendorBankAccountEntity = require('../lib/Entities/VendorBankAccountEntity');

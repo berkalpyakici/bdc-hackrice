@@ -33,7 +33,7 @@ const {
     devKey,
     env
 } = require('../testConfig');
-const BDC = require('../../index')(username, password, devKey, env);
+const BDC = require('../index')(username, password, devKey, env);
 const Auth = require('../lib/Auth');
 
 describe('Auth', () => {

@@ -54,7 +54,7 @@ const {
     vendorCreditId,
     customerBankAccountId
 } = require('../testConfig');
-const BDC = require('../../index')(username, password, devKey, env);
+const BDC = require('../index')(username, password, devKey, env);
 const Auth = require('../lib/Auth');
 const Payments = require('../lib/Payments');
 const SentPayEntity = require('../lib/Entities/SentPayEntity');

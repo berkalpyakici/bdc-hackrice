@@ -4,7 +4,7 @@ const readline = require('readline').createInterface({
 });
 
 const { username, password, devKey, env } = require('../credentials');
-const BDC = require('../../index')(username, password, devKey, env);
+const BDC = require('../index')(username, password, devKey, env);
 
 // deviceId & machineName are both required fields for the MFAAuthenticate endpoint
 // these values are not referenced, but rather set arbitrarily by the developer

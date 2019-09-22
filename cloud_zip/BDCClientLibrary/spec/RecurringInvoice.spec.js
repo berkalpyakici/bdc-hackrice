@@ -38,7 +38,7 @@ const {
     recurringInvoiceId,
     vendorId
 } = require('../testConfig');
-const BDC = require('../../index')(username, password, devKey, env);
+const BDC = require('../index')(username, password, devKey, env);
 const Auth = require('../lib/Auth');
 const RecurringInvoice = require('../lib/RecurringInvoice');
 const RecurringInvoiceEntity = require('../lib/Entities/RecurringInvoiceEntity');

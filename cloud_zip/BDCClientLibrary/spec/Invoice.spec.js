@@ -38,7 +38,7 @@ const {
     customerId,
     invoiceId
 } = require('../testConfig');
-const BDC = require('../../index')(username, password, devKey, env);
+const BDC = require('../index')(username, password, devKey, env);
 const Auth = require('../lib/Auth');
 const Invoice = require('../lib/Invoice');
 const InvoiceEntity = require('../lib/Entities/InvoiceEntity');

@@ -56,7 +56,7 @@ util.convertParamsToDataString
 */
 const fetch = require('node-fetch');
 const { username, password, devKey, env, orgId } = require('../testConfig');
-const BDC = require('../../index')(username, password, devKey, env);
+const BDC = require('../index')(username, password, devKey, env);
 const util = require('../lib/util');
 
 const InvoiceEntity = require('../lib/Entities/InvoiceEntity');

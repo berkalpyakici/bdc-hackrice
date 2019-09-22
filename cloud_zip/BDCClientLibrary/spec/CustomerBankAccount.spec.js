@@ -31,7 +31,7 @@ const {
     mfaId,
     deviceId
 } = require('../testConfig');
-const BDC = require('../../index')(username, password, devKey, env);
+const BDC = require('../index')(username, password, devKey, env);
 const Auth = require('../lib/Auth');
 const CustomerBankAccount = require('../lib/CustomerBankAccount');
 const CustomerBankAccountEntity = require('../lib/Entities/CustomerBankAccountEntity');

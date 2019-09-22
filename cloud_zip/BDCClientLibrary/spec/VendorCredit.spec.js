@@ -36,7 +36,7 @@ const {
     vendorCreditId,
     vendorId
 } = require('../testConfig');
-const BDC = require('../../index')(username, password, devKey, env);
+const BDC = require('../index')(username, password, devKey, env);
 const Auth = require('../lib/Auth');
 const VendorCredit = require('../lib/VendorCredit');
 const VendorCreditEntity = require('../lib/Entities/VendorCreditEntity');

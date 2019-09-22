@@ -16,12 +16,18 @@
   },
   "dependencies": {
     "actions-on-google": "^2.6.0",
+    "allapproval": "file:./BDCInterface/allapprovals_module",
+    "allbill": "file:./BDCInterface/allbill_module",
+    "authentication": "file:./BDCInterface/auth_module",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase-admin": "^7.2.0",
     "firebase-functions": "^2.2.1",
     "form-urlencoded": "^4.0.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "recurbill": "file:./BDCInterface/recurringbills_module",
+    "sessionInfo": "file:./BDCInterface/sessioninfo_module",
+    "vendor": "file:./BDCInterface/vendor_module"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",

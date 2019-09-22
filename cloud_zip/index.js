@@ -1,7 +1,8 @@
-const BDC = require('./BDCClientLibrary/lib/BDC');
+exports.vendorStatus = async data => {
+    var toExport = await require('vendor');
+    return toExport.getVendors;
+};
 
-function BDCExport(username, password, devKey, env) {
-    return new BDC(username, password, devKey, env);
-}
+exports.vendorStatus();
 
-module.exports = BDCExport;
+

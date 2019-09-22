@@ -12,7 +12,7 @@ BDC.listOrgs
 
 */
 const { username, password, devKey, env } = require('../testConfig');
-const BDC = require('../../index')(username, password, devKey, env);
+const BDC = require('../index')(username, password, devKey, env);
 const Auth = require('../lib/Auth');
 const Customer = require('../lib/Customer');
 const CustomerBankAccount = require('../lib/CustomerBankAccount');
