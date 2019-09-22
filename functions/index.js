@@ -143,6 +143,9 @@ app.intent('bdc get recurring bills', async (conv) => {
 //Show bill approval process
 app.intent('bdc bills', async (conv, {type}) => {
     try {
+        if (type == null || type == '') {
+            type == 'all';
+        }
         const response = await require('./BDCInterface/getApprovalsList')(type);
         conv.ask(response[0]);
         conv.ask(new Table({
