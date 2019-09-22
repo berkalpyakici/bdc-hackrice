@@ -108,13 +108,13 @@ app.intent('bdc organization id', async (conv) => {
 // Vendor Invites
 app.intent('bdc vendor invites', async (conv) => {
     try {
-        const response = await require('./BDCInterface/vendorIndex').vendorStatus();
+        const response = await require('./BDCInterface/getVendorIndex').vendorStatus();
+        conv.ask(response[0]);
         conv.ask(new Table({
             dividers: true,
             columns: response[1],
             rows: response[2],
         }));
-        conv.ask(response[0]);
     } catch(e) {
         console.log(e);
         conv.ask('Something went wrong while accessing to Bill.com services.');
