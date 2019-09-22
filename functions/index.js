@@ -123,11 +123,11 @@ app.intent('bdc vendor invites', async (conv) => {
     conv.ask('Is there anything else I can help you with?');
   });
 
-//Show upcoming bills
-app.intent('bdc get bills', async (conv) => {
+//Show recurring bills
+app.intent('bdc get recurring bills', async (conv) => {
   try {
     const response = await require('./BDCInterface/getRecurringBills')();
-    conv.ask("Here is a list of your upcoming bills.");
+    conv.ask("Here is a list of your recurring bills.");
     conv.ask(new Table({
       dividers: true,
       columns: ['Vendor', 'Amount', 'Due Date', 'Description'],
@@ -138,6 +138,23 @@ app.intent('bdc get bills', async (conv) => {
     conv.ask('Something went wrong while accessing to Bill.com services. ');
   }
   conv.ask("How can I make your day better my guy?");
+});
+
+//Show bill approval process
+app.intent('bdc bills', async (conv, {type}) => {
+    try {
+        const response = await require('./BDCInterface/getApprovalsList')(type);
+        conv.ask(response[0]);
+        conv.ask(new Table({
+            dividers: true,
+            columns: response[1],
+            rows: response[2]
+        }))
+    } catch(e) {
+        console.log(e);
+        conv.ask('Something went wrong while accessing Bill.com services. ');
+    }
+    conv.ask('Is there anything else?');
 });
 
 // Suggestions

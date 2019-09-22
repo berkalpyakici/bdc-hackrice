@@ -10,21 +10,30 @@ module.exports = async function(inputStatus) {
     try {
         const BDC = await require('./authentication.js')();
 
-        const statuses = {6: "All Bills", 0: "unassigned", 1: "assigned", 4: "approving", 3: "approved", 5: "denied"};
-
-        if(inputStatus == 6) {
-            const response = await BDC.Bill.list({"sort": [{"field": "updatedTime", "asc": 0}]});
-        } else {
-            const response = await BDC.Bill.list({"approvalStatus": inputStatus, "sort": [{"field": "dueDate", "asc": 0}]});
+        const statuses = {
+            "all": 6,
+            "unassigned": 0,
+            "assigned": 1,
+            "approving": 4,
+            "approved": 3,
+            "denied": 5
         }
 
-        const strings = {6: "Here are all your bills sorted by approval:", 0: "Here are all your unassigned bills:", 1: "Here are all your assigned bills",
-                    4: "Here are all your bills that are being approved", 3: "Here are all your approved bills", 5: "Here are all your denied bills"};
-        const columns = ["ID", "Amount", "Due Date", "Assigned"];
+        const statuses_response = {6: "All", 0: "Unassigned", 1: "Assigned", 4: "Approving", 3: "Approved", 5: "Denied"};
+
+        if(inputStatus == 'all') {
+            var response = await BDC.Bill.list({"sort": [{"field": "updatedTime", "asc": 0}]});
+        } else {
+            var response = await BDC.Bill.list({"approvalStatus": statuses[inputStatus], "sort": [{"field": "dueDate", "asc": 0}]});
+        }
+
+        const strings = {'all': "Here are all your bills sorted by approval.", 'unassigned': "Here are all your unassigned bills.", 'assigned': "Here are all your assigned bills.",
+                    'approving': "Here are all your bills that are being approved.", 'approved': "Here are all your approved bills.", 'denied': "Here are all your denied bills."};
+        const columns = ["ID", "Amount", "Due Date", "Status"];
         var rows = [];
 
         for (let i = 0; i < response.length; i++) {
-            rows.push([response[i].id, response[i].amount, response[i].dueDate, statuses[response[i].approvalStatus]]);
+            rows.push([response[i].id, response[i].amount, response[i].dueDate, statuses_response[response[i].approvalStatus]]);
         }
 
         return [strings[inputStatus], columns, rows];
