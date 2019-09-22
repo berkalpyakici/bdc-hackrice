@@ -10,10 +10,10 @@ const BDC = require('./../BDCClientLibrary')(BDC_username, BDC_password, BDC_dev
 module.exports = async () => {
     try {
         await BDC.Auth.login(BDC_orgId);
-	console.log('Authentication successful.');
-	return BDC;
+	    console.log('Authentication successful.');
+	    return BDC;
     } catch (err) {
         console.log(err);
-	return null;
+	    return null;
     }
 };

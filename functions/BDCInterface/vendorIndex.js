@@ -7,7 +7,7 @@ String.prototype.format = function () {
     });
 };
 
-async function getVendors(){
+async function getVendors() {
     const BDC = await require('./authentication.js')();
     const endpoint = '/List/Vendor.json';
     const data=`{
@@ -22,7 +22,7 @@ async function getVendors(){
     return vendors;
 }
 
-async function vendorStatus(){
+async function vendorStatus() {
     const BDC = await require('./authentication.js')();
     const endpoint = '/GetNetworkStatus.json';
 
@@ -46,16 +46,16 @@ async function vendorAdded() {
 
 }
 
-(async () => {
-    try{
-        let a = await vendorStatus();
-        console.log("this is the past");
-    }
-    catch (err) {
-        console.log(err);
+// (async () => {
+//     try{
+//         let a = await vendorStatus();
+//         console.log("this is the past");
+//     }
+//     catch (err) {
+//         console.log(err);
 
-    }
-})();
+//     }
+// })();
 
 exports.vendorStatus = vendorStatus;
 exports.getVendors = getVendors;
