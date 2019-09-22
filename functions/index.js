@@ -35,6 +35,8 @@ const SELECTION_KEY_GOOGLE_ASSISTANT = 'googleAssistant';
 const SELECTION_KEY_GOOGLE_PAY = 'googlePay';
 const SELECTION_KEY_GOOGLE_PIXEL = 'googlePixel';
 const SELECTION_KEY_GOOGLE_HOME = 'googleHome';
+const APP_STORE_REDIRECT = 'appStore';
+const PLAY_STORE_REDIRECT = 'playStore';
 
 // Constant for image URLs
 const IMG_URL_AOG = 'https://storage.googleapis.com/actionsresources/logo_assistant_2x_64dp.png';
@@ -48,6 +50,8 @@ const SELECTED_ITEM_RESPONSES = {
   [SELECTION_KEY_GOOGLE_PAY]: 'You selected Google Pay!',
   [SELECTION_KEY_GOOGLE_PIXEL]: 'You selected Google Pixel!',
   [SELECTION_KEY_GOOGLE_HOME]: 'You selected Google Home!',
+  [APP_STORE_REDIRECT]: 'Check out bill.com in the App Store!',
+  [PLAY_STORE_REDIRECT]: 'Check out bill.com in the PlayStore!',
 };
 
 const intentSuggestions = [
@@ -163,9 +167,14 @@ const playStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=h
 //Redirect to app
 app.intent('Redirect to App', (conv) => {
   conv.ask('For more help on the go, check out our app!');
-  conv.ask(new Carousel({
+  conv.ask(new Suggestions([APP_STORE_REDIRECT, PLAY_STORE_REDIRECT]));
+  conv.ask(new List({
     items: {
-      ['Apple App Store']: {
+      [APP_STORE_REDIRECT]: {
+        synonyms: [
+          'App Store',
+          'Apple Store',
+        ],
         title: 'App Store',
         description: "Scan for Apple devices",
         image: new Image({
@@ -173,7 +182,12 @@ app.intent('Redirect to App', (conv) => {
           alt: "App Store QR Code",
         }),
       },
-      ['Google Play Store']: {
+      [PLAY_STORE_REDIRECT]: {
+        synonyms: [
+          'Play Store',
+          'Google Store',
+          'Android Store',
+        ],
         title: 'Play Store',
         description: "Scan for Android devices",
         image: new Image({
