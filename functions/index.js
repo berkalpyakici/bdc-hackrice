@@ -55,13 +55,10 @@ const SELECTED_ITEM_RESPONSES = {
 };
 
 const intentSuggestions = [
-  'Basic Card',
-  'Browse Carousel',
-  'Carousel',
-  'List',
-  'Media',
-  'Suggestions',
-  'Table',
+  'Org ID',
+  'Vendor Invite Status',
+  'Recurring Bills',
+  'Show me approved bills.'
 ];
 
 const app = dialogflow({debug: true});
@@ -92,21 +89,18 @@ app.intent('Default Welcome Intent', (conv) => {
   conv.ask(new Suggestions(intentSuggestions));
 });
 
-app.intent('normal ask', (conv) => {
-  conv.ask('Ask me to show you a list, carousel, or basic card.');
-});
-
 // Show Organization ID
 app.intent('bdc organization id', async (conv) => {
     try {
         const response = await require('./BDCInterface/getSessionInfo')();
-        conv.ask('Your Bill.com organization ID is ' + response['organizationId'] + '.');
+        conv.ask('Your Bill.com organization ID is ' + response['organizationId'] + '. ');
     } catch (e) {
         console.log(e);
-        conv.ask('Something went wrong while accessing to Bill.com services.');
+        conv.ask('Something went wrong while accessing to Bill.com services. ');
     }
 
     conv.ask('Is there anything else I can help you with?');
+    conv.ask(new Suggestions(intentSuggestions));
 });
 
 // Vendor Invites
@@ -121,10 +115,11 @@ app.intent('bdc vendor invites', async (conv) => {
         }));
     } catch(e) {
         console.log(e);
-        conv.ask('Something went wrong while accessing to Bill.com services.');
+        conv.ask('Something went wrong while accessing to Bill.com services. ');
     }
 
     conv.ask('Is there anything else I can help you with?');
+    conv.ask(new Suggestions(intentSuggestions));
   });
 
 //Show upcoming bills
@@ -141,7 +136,8 @@ app.intent('bdc get recurring bills', async (conv) => {
     console.log(e);
     conv.ask('Something went wrong while accessing to Bill.com services. ');
   }
-  conv.ask("How can I make your day better my guy");
+  conv.ask("How can I make your day better my guy?");
+  conv.ask(new Suggestions(intentSuggestions));
 });
 
 //Show bill approval process
@@ -164,37 +160,71 @@ app.intent('bdc bills', async (conv, {type}) => {
 const appStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://apps.apple.com/us/app/bill-com/id980353334';
 const playStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://play.google.com/store/apps/details?id=com.bdc.bill';
 
-//Redirect to app
+// //Redirect to app
+// app.intent('Redirect to App', (conv) => {
+//   conv.ask('Check out our app!');
+//   conv.ask(new BasicCard({
+//     text: 'To pay bills or see more account details on the go, use our app! Scan here for the Apple App Store.',
+//     subtitle: 'Apple App Store',
+//     title: 'Look at our App!',
+//     buttons: new Button({
+//       title: 'Click here or scan for the link',
+//       url: 'https://apps.apple.com/us/app/bill-com/id980353334',
+//     }),
+//     image: new Image({
+//       url: appStoreQR,
+//       alt: 'App Store QR',
+//     }),
+//   })),
+//   conv.ask(' ');
+//   conv.ask(new BasicCard({
+//     text: 'To pay bills or see more account details on the go, use our app! Scan here for the Google Play Store.',
+//     subtitle: 'Google Play Store',
+//     title: 'Look at our App!',
+//     buttons: new Button({
+//       title: 'Click here or scan for the link',
+//       url: 'https://play.google.com/store/apps/details?id=com.bdc.bill',
+//     }),
+//     image: new Image({
+//       url: playStoreQR,
+//       alt: 'Play Store QR',
+//     }),
+//   })),
+//   conv.ask(' ');
+// });
+
+// Carousel
 app.intent('Redirect to App', (conv) => {
   conv.ask('Check out our app!');
-  conv.ask(new BasicCard({
-    text: 'To pay bills or see more account details on the go, use our app! Scan here for the Apple App Store.',
-    subtitle: 'Apple App Store',
-    title: 'Look at our App!',
-    buttons: new Button({
-      title: 'Click here or scan for the link',
-      url: 'https://apps.apple.com/us/app/bill-com/id980353334',
-    }),
-    image: new Image({
-      url: appStoreQR,
-      alt: 'App Store QR',
-    }),
-  })),
-  conv.ask(' ');
-  conv.ask(new BasicCard({
-    text: 'To pay bills or see more account details on the go, use our app! Scan here for the Google Play Store.',
-    subtitle: 'Google Play Store',
-    title: 'Look at our App!',
-    buttons: new Button({
-      title: 'Click here or scan for the link',
-      url: 'https://play.google.com/store/apps/details?id=com.bdc.bill',
-    }),
-    image: new Image({
-      url: playStoreQR,
-      alt: 'Play Store QR',
-    }),
-  })),
-  conv.ask(' ');
+  conv.ask(new Suggestions(intentSuggestions));
+  conv.ask(new Carousel({
+    items: {
+      // Add the first item to the carousel
+      [APP_STORE_REDIRECT]: {
+        synonyms: [
+          'App Store',
+        ],
+        title: 'Apple App Store',
+        description: 'To pay bills or see more account details on the go, use our app! Scan here for the Apple App Store.',
+        image: new Image({
+          url: appStoreQR,
+          alt: 'App Store QR',
+        }),
+      },
+      // Add the second item to the carousel
+      [PLAY_STORE_REDIRECT]: {
+        synonyms: [
+          'Play Store',
+      ],
+        title: 'Google Play Store',
+        description: 'To pay bills or see more account details on the go, use our app! Scan here for the Google Play Store.',
+        image: new Image({
+          url: playStoreQR,
+          alt: 'Play Store QR',
+        }),
+      },
+    },
+  }));
 });
 
 // Suggestions
@@ -205,294 +235,6 @@ app.intent('suggestions', (conv) => {
     name: 'Suggestion Link',
     url: 'https://assistant.google.com/',
   }));
-});
-
-// Basic card
-app.intent('basic card', (conv) => {
-  conv.ask('This is the first simple response for a basic card.');
-  conv.ask(new Suggestions(intentSuggestions));
-  conv.ask(new BasicCard({
-    text: `This is a basic card.  Text in a basic card can include "quotes" and
-    most other unicode characters including emoji 📱.  Basic cards also support
-    some markdown formatting like *emphasis* or _italics_, **strong** or
-    __bold__, and ***bold itallic*** or ___strong emphasis___ as well as other
-    things like line  \nbreaks`, // Note the two spaces before '\n' required for
-                                 // a line break to be rendered in the card.
-    subtitle: 'Build Actions',
-    title: 'Google Assistant',
-    buttons: new Button({
-      title: 'This is a button',
-      url: 'https://assistant.google.com/',
-    }),
-    image: new Image({
-      url: IMG_URL_AOG,
-      alt: 'Google Assistant logo',
-    }),
-  }));
-  conv.ask(new SimpleResponse({
-    speech: 'This is the second simple response.',
-    text: 'This is the 2nd simple response.',
-  }));
-});
-
-// List
-app.intent('list', (conv) => {
-  conv.ask('This is an example of a list.');
-  conv.ask(new Suggestions(intentSuggestions));
-  conv.ask(new List({
-    title: 'List Title',
-    items: {
-      // Add the first item to the list
-      [SELECTION_KEY_GOOGLE_ASSISTANT]: {
-        synonyms: [
-          'Assistant',
-          'Google Assistant',
-        ],
-        title: 'Item #1',
-        description: 'Description of Item #1',
-        image: new Image({
-          url: 'https://www.gstatic.com/images/branding/product/2x/assistant_48dp.png',
-          alt: 'Google Assistant logo',
-        }),
-      },
-      // Add the second item to the list
-      [SELECTION_KEY_GOOGLE_PAY]: {
-        synonyms: [
-          'Transactions',
-          'Google Payments',
-          'Google Pay',
-      ],
-        title: 'Item #2',
-        description: 'Description of Item #2',
-        image: new Image({
-          url: 'https://www.gstatic.com/images/branding/product/2x/pay_48dp.png',
-          alt: 'Google Pay logo',
-        }),
-      },
-      // Add the third item to the list
-      [SELECTION_KEY_GOOGLE_PIXEL]: {
-        synonyms: [
-          'Pixel',
-          'Google Pixel',
-          'Pixel phone'
-        ],
-        title: 'Item #3',
-        description: 'Description of Item #3',
-        image: new Image({
-          url: 'https://storage.googleapis.com/madebygoog/v1/Pixel/Pixel_ColorPicker/Pixel_Device_Angled_Black-720w.png',
-          alt: 'Google Pixel phone',
-        }),
-      },
-      // Add the last item to the list
-      [SELECTION_KEY_GOOGLE_HOME]: {
-        title: 'Item #4',
-        synonyms: [
-          'Home',
-          'Google Home',
-        ],
-        description: 'Description of Item #4',
-        image: new Image({
-          url: 'https://lh3.googleusercontent.com/Nu3a6F80WfixUqf_ec_vgXy_c0-0r4VLJRXjVFF_X_CIilEu8B9fT35qyTEj_PEsKw',
-          alt: 'Google Home',
-        }),
-      },
-    },
-  }));
-});
-
-// Carousel
-app.intent('carousel', (conv) => {
-  conv.ask('This is an example of a carousel.');
-  conv.ask(new Suggestions(intentSuggestions));
-  conv.ask(new Carousel({
-    items: {
-      // Add the first item to the carousel
-      [SELECTION_KEY_GOOGLE_ASSISTANT]: {
-        synonyms: [
-          'Assistant',
-          'Google Assistant',
-        ],
-        title: 'Item #1',
-        description: 'Description of Item #1',
-        image: new Image({
-          url: IMG_URL_AOG,
-          alt: 'Google Assistant logo',
-        }),
-      },
-      // Add the second item to the carousel
-      [SELECTION_KEY_GOOGLE_PAY]: {
-        synonyms: [
-          'Transactions',
-          'Google Payments',
-      ],
-        title: 'Item #2',
-        description: 'Description of Item #2',
-        image: new Image({
-          url: IMG_URL_GOOGLE_PAY,
-          alt: 'Google Pay logo',
-        }),
-      },
-      // Add third item to the carousel
-      [SELECTION_KEY_GOOGLE_PIXEL]: {
-        synonyms: [
-          'Pixel',
-          'Google Pixel phone',
-        ],
-        title: 'Item #3',
-        description: 'Description of Item #3',
-        image: new Image({
-          url: IMG_URL_GOOGLE_PIXEL,
-          alt: 'Google Pixel phone',
-        }),
-      },
-      // Add last item of the carousel
-      [SELECTION_KEY_GOOGLE_HOME]: {
-        title: 'Item #4',
-        synonyms: [
-          'Google Home',
-        ],
-        description: 'Description of Item #4',
-        image: new Image({
-          url: IMG_URL_GOOGLE_HOME,
-          alt: 'Google Home',
-        }),
-      },
-    },
-  }));
-});
-
-// Browse Carousel
-app.intent('browse carousel', (conv) => {
-  // Browse Carousel requires browser access
-  if (!conv.hasWebBrowser) {
-    conv.ask(`I'm sorry, browse carousel isn't currently supported on smart display`);
-    const filterChips = intentSuggestions.filter(chip => chip !="Browse Carousel");
-    conv.ask(new Suggestions(filterChips));
-    return;
-  }
-  conv.ask('This is an example of a "Browse Carousel"');
-  conv.ask(new BrowseCarousel({
-    items: [
-      new BrowseCarouselItem({
-        title: 'Item #1',
-        url: 'https://assistant.google.com/',
-        description: 'Description of Item #1',
-        image: new Image({
-          url: 'https://www.gstatic.com/images/branding/product/2x/assistant_64dp.png',
-          alt: 'Google Assistant logo',
-        }),
-        footer: 'Item 1 footer',
-      }),
-      new BrowseCarouselItem({
-        title: 'Item #2',
-        url: 'https://developers.google.com/actions/transactions/physical/dev-guide-physical-gpay',
-        description: 'Description of Item #2',
-        image: new Image({
-          url: 'https://www.gstatic.com/images/branding/product/2x/pay_64dp.png',
-          alt: 'Google Pay logo',
-        }),
-        footer: 'Item 2 footer',
-      }),
-    ],
-  }));
-  conv.ask(new Suggestions(intentSuggestions));
-});
-
-// Media response
-app.intent('media response', (conv) => {
-  // Media responses require audio playback
-  if (!conv.hasAudioPlayback) {
-    conv.close('Sorry, this device does not support audio playback.');
-    return;
-  }
-  conv.ask('This is the first simple response for a media response');
-  conv.ask(new MediaObject({
-    name: 'Jazz in Paris',
-    url: 'https://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3',
-    description: 'A funky Jazz tune',
-    icon: new Image({
-      url: 'https://storage.googleapis.com/automotive-media/album_art.jpg',
-      alt: 'Media icon',
-    }),
-  }));
-  conv.ask(new Suggestions(intentSuggestions));
-});
-
-// Handle a media status event
-app.intent('media status', (conv) => {
-  const mediaStatus = conv.arguments.get('MEDIA_STATUS');
-  let response = 'Unknown media status received.';
-  if (mediaStatus && mediaStatus.status === 'FINISHED') {
-    response = 'Hope you enjoyed the tunes!';
-  }
-  conv.ask(response);
-  conv.ask(new Suggestions(intentSuggestions));
-});
-
-// Handle list or carousel selection
-app.intent('item selected', (conv, params, option) => {
-  let response = 'You did not select any item from the list or carousel';
-  if (option && SELECTED_ITEM_RESPONSES.hasOwnProperty(option)) {
-    response = SELECTED_ITEM_RESPONSES[option];
-  } else {
-    response = 'You selected an unknown item from the list or carousel';
-  }
-  conv.ask(response);
-  conv.ask(new Suggestions(intentSuggestions));
-});
-
-app.intent('card builder', (conv) => {
-  conv.ask(...conv.incoming);
-  conv.ask(new BasicCard({
-    text: `Actions on Google let you build for
-    the Google Assistant. Reach users right when they need you. Users don’t
-    need to pre-enable skills or install new apps.  \n  \nThis was written
-    in the fulfillment webhook!`,
-    subtitle: 'Engage users through the Google Assistant',
-    title: 'Actions on Google',
-    buttons: new Button({
-      title: 'Developer Docs',
-      url: 'https://developers.google.com/actions/',
-    }),
-    image: new Image({
-      url: IMG_URL_AOG,
-      alt: 'Google Assistant logo',
-    }),
-  }));
-});
-
-app.intent('table builder', (conv) => {
-  conv.ask('You can include table data like this')
-  conv.ask(new Table({
-    dividers: true,
-    columns: ['Basic Plan', 'Mid-tier Plan', 'Premium Plan'],
-    rows: [
-      ['row 1 item 1', 'row 1 item 2', 'row 1 item 3'],
-      ['row 2 item 1', 'row 2 item 2', 'row 2 item 3'],
-    ],
-  }));
-  conv.ask(new Suggestions(intentSuggestions));
-});
-
-// Leave conversation with card
-app.intent('bye card', (conv) => {
-  conv.ask('Goodbye, World!');
-  conv.close(new BasicCard({
-    text: 'This is a goodbye card.',
-  }));
-});
-
-// Leave conversation with SimpleResponse
-app.intent('bye response', (conv) => {
-  conv.close(new SimpleResponse({
-    speech: 'Okay see you later',
-    text: 'OK see you later!',
-  }));
-});
-
-// Leave conversation
-app.intent('normal bye', (conv) => {
-  conv.close('Okay see you later!');
 });
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
