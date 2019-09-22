@@ -166,38 +166,37 @@ const playStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=h
 
 //Redirect to app
 app.intent('Redirect to App', (conv) => {
-  conv.ask('For more help on the go, check out our app!');
-  conv.ask(new Suggestions([APP_STORE_REDIRECT, PLAY_STORE_REDIRECT]));
-  conv.ask(new List({
-    items: {
-      [APP_STORE_REDIRECT]: {
-        synonyms: [
-          'App Store',
-          'Apple Store',
-        ],
-        title: 'App Store',
-        description: "Scan for Apple devices",
-        image: new Image({
-          url: appStoreQR,
-          alt: "App Store QR Code",
-        }),
-      },
-      [PLAY_STORE_REDIRECT]: {
-        synonyms: [
-          'Play Store',
-          'Google Store',
-          'Android Store',
-        ],
-        title: 'Play Store',
-        description: "Scan for Android devices",
-        image: new Image({
-          url: playStoreQR,
-          alt: "Play Store QR Code",
-        }),
-      },
-    },
-  }));
+  conv.ask('Check out our app!');
+  conv.ask(new BasicCard({
+    text: 'To pay bills or see more account details on the go, use our app! Scan here for the Apple App Store.',
+    subtitle: 'Apple App Store',
+    title: 'Look at our App!',
+    buttons: new Button({
+      title: 'Click here or scan for the link',
+      url: 'https://apps.apple.com/us/app/bill-com/id980353334',
+    }),
+    image: new Image({
+      url: appStoreQR,
+      alt: 'App Store QR',
+    }),
+  })),
+  conv.ask(' ');
+  conv.ask(new BasicCard({
+    text: 'To pay bills or see more account details on the go, use our app! Scan here for the Google Play Store.',
+    subtitle: 'Google Play Store',
+    title: 'Look at our App!',
+    buttons: new Button({
+      title: 'Click here or scan for the link',
+      url: 'https://play.google.com/store/apps/details?id=com.bdc.bill',
+    }),
+    image: new Image({
+      url: playStoreQR,
+      alt: 'Play Store QR',
+    }),
+  })),
+  conv.ask(' ');
 });
+
 
 // Suggestions
 app.intent('suggestions', (conv) => {
