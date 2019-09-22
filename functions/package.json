@@ -1,10 +1,10 @@
 {
   "name": "bdc-application",
-  "description": "A simple sample showing the visual conversation components available with Actions on Google using Dialogflow",
+  "description": "Google Actions conversation app for Bill.com - built at HackRice 9.",
   "version": "0.0.1",
   "private": true,
-  "license": "Apache Version 2.0",
-  "author": "Google Inc.",
+  "license": "GPL-3.0",
+  "author": "Berk Alp Yakici, Christine Zhao, Daniel Rothfusz, Brandon Stanley",
   "engines": {
     "node": "8"
   },

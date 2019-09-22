@@ -126,15 +126,16 @@ app.intent('bdc vendor invites', async (conv) => {
 app.intent('bdc get recurring bills', async (conv) => {
   try {
     const response = await require('./BDCInterface/getRecurringBills')();
-    if(response.length == 0){
+    if(response.length == 0) {
         conv.ask("You do not have any recurring bills");
-    }else{
-    conv.ask("Here is a list of your upcoming bills.");
-    conv.ask(new Table({
-      dividers: true,
-      columns: ['Vendor', 'Amount', 'Due Date', 'Description'],
-      rows: response,
-    }));}
+    } else {
+        conv.ask("Here is a list of your upcoming bills.");
+        conv.ask(new Table({
+          dividers: true,
+          columns: ['Vendor', 'Amount', 'Due Date', 'Description'],
+          rows: response,
+        }));
+    }
   } catch(e) {
     console.log(e);
     conv.ask('Something went wrong while accessing to Bill.com services. ');
@@ -146,13 +147,21 @@ app.intent('bdc get recurring bills', async (conv) => {
 //Show bill approval process
 app.intent('bdc bills', async (conv, {type}) => {
     try {
+        if (type == null || type == '') {
+            type = 'all';
+        }
         const response = await require('./BDCInterface/getApprovalsList')(type);
-        conv.ask(response[0]);
-        conv.ask(new Table({
-            dividers: true,
-            columns: response[1],
-            rows: response[2]
-        }))
+
+        if (response[2].length > 0) {
+            conv.ask(response[0]);
+            conv.ask(new Table({
+                dividers: true,
+                columns: response[1],
+                rows: response[2]
+            }));
+        } else {
+            conv.ask('You do not have '+type+' bills. ');
+        }
     } catch(e) {
         console.log(e);
         conv.ask('Something went wrong while accessing Bill.com services. ');
