@@ -160,39 +160,6 @@ app.intent('bdc bills', async (conv, {type}) => {
 const appStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://apps.apple.com/us/app/bill-com/id980353334';
 const playStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://play.google.com/store/apps/details?id=com.bdc.bill';
 
-// //Redirect to app
-// app.intent('Redirect to App', (conv) => {
-//   conv.ask('Check out our app!');
-//   conv.ask(new BasicCard({
-//     text: 'To pay bills or see more account details on the go, use our app! Scan here for the Apple App Store.',
-//     subtitle: 'Apple App Store',
-//     title: 'Look at our App!',
-//     buttons: new Button({
-//       title: 'Click here or scan for the link',
-//       url: 'https://apps.apple.com/us/app/bill-com/id980353334',
-//     }),
-//     image: new Image({
-//       url: appStoreQR,
-//       alt: 'App Store QR',
-//     }),
-//   })),
-//   conv.ask(' ');
-//   conv.ask(new BasicCard({
-//     text: 'To pay bills or see more account details on the go, use our app! Scan here for the Google Play Store.',
-//     subtitle: 'Google Play Store',
-//     title: 'Look at our App!',
-//     buttons: new Button({
-//       title: 'Click here or scan for the link',
-//       url: 'https://play.google.com/store/apps/details?id=com.bdc.bill',
-//     }),
-//     image: new Image({
-//       url: playStoreQR,
-//       alt: 'Play Store QR',
-//     }),
-//   })),
-//   conv.ask(' ');
-// });
-
 // Carousel
 app.intent('Redirect to App', (conv) => {
   conv.ask('Check out our app!');
