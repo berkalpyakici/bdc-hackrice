@@ -164,11 +164,11 @@ app.intent('bdc bills', async (conv, {type}) => {
 app.intent('bdc invoices', async (conv, {type}) => {
     try {
         const response = await require('./BDCInterface/getInvoices')();
-        conv.ask(response[0]);
+        conv.ask("Here are the invoices you have upcoming.")
         conv.ask(new Table({
             dividers: true,
             columns: ["Customer","Status","Amount"],
-            rows: response
+            rows: response,
         }))
         } catch(e) {
         console.log(e);
