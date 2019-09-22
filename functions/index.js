@@ -157,6 +157,34 @@ app.intent('bdc bills', async (conv, {type}) => {
     conv.ask('Is there anything else?');
 });
 
+const appStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://apps.apple.com/us/app/bill-com/id980353334';
+const playStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://play.google.com/store/apps/details?id=com.bdc.bill';
+
+//Redirect to app
+app.intent('Redirect to App', (conv) => {
+  conv.ask('For more help on the go, check out our app!');
+  conv.ask(new Carousel({
+    items: {
+      ['Apple App Store']: {
+        title: 'App Store',
+        description: "Scan for Apple devices",
+        image: new Image({
+          url: appStoreQR,
+          alt: "App Store QR Code",
+        }),
+      },
+      ['Google Play Store']: {
+        title: 'Play Store',
+        description: "Scan for Android devices",
+        image: new Image({
+          url: playStoreQR,
+          alt: "Play Store QR Code",
+        }),
+      },
+    },
+  }));
+});
+
 // Suggestions
 app.intent('suggestions', (conv) => {
   conv.ask('This is an example of suggestion chips.');
