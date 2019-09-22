@@ -13,12 +13,15 @@ module.exports = async function() {
         }
 
         const data = await BDC.RecurringBill.list(params);
-        
+
         var list = [];
 
         for (var i=0; i < data.length; i++) {
             const vendor = await BDC.Vendor.read(data[i].vendorId);
-            list.push([vendor.name,data[i].amount,data[i].dueDate,data[i].description]);
+            for(var j=0; j < data.length; j++){
+              list.push([vendor.name,data[i].recurringBillLineItems[j].amount,data[i].nextDueDate,data[i].description]);
+            }
+
         }
 
         return list;

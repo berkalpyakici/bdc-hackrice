@@ -126,12 +126,15 @@ app.intent('bdc vendor invites', async (conv) => {
 app.intent('bdc get recurring bills', async (conv) => {
   try {
     const response = await require('./BDCInterface/getRecurringBills')();
+    if(response.length == 0){
+        conv.ask("You do not have any recurring bills");
+    }else{
     conv.ask("Here is a list of your upcoming bills.");
     conv.ask(new Table({
       dividers: true,
       columns: ['Vendor', 'Amount', 'Due Date', 'Description'],
       rows: response,
-    }));
+    }));}
   } catch(e) {
     console.log(e);
     conv.ask('Something went wrong while accessing to Bill.com services. ');
@@ -154,23 +157,27 @@ app.intent('bdc bills', async (conv, {type}) => {
         console.log(e);
         conv.ask('Something went wrong while accessing Bill.com services. ');
     }
-    conv.ask('Is there anything else?');
+    conv.ask('Is there anything else I can help you with?');
 });
 
 app.intent('bdc invoices', async (conv, {type}) => {
     try {
-        const response = await require('./BDCInterface/getInvoices')();
-        conv.ask("Here are the invoices you have upcoming.")
-        conv.ask(new Table({
-            dividers: true,
-            columns: ["Customer","Status","Amount"],
-            rows: response,
-        }))
+        const response = await require('./BDCInterface/getInvoices')(type);
+        if (response.length ==0){
+          conv.ask("There are no " + type + " invoices");
+        }else{
+          conv.ask("Here are the " + type + " invoices you have upcoming." )
+          conv.ask(new Table({
+              dividers: true,
+              columns: ["Customer","Status","Amount"],
+              rows: response,
+          }))
+        }
         } catch(e) {
         console.log(e);
         conv.ask('Something went wrong while accessing Bill.com services. ');
         }
-        conv.ask('Is there anything else?');
+        conv.ask('Is there anything else I can help you with?');
 });
 
 const appStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://apps.apple.com/us/app/bill-com/id980353334';
