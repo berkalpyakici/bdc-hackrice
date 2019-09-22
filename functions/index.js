@@ -93,7 +93,7 @@ app.intent('Default Welcome Intent', (conv) => {
 app.intent('bdc organization id', async (conv) => {
     try {
         const response = await require('./BDCInterface/getSessionInfo')();
-        conv.ask('Your Bill.com organization ID is ' + response['organizationId'] + '. ');
+        conv.ask('<speak>Your Bill.com organization ID is <say-as interpet-as="verbatim">' + response['organizationId'] + '</say-as>. </speak>');
     } catch (e) {
         console.log(e);
         conv.ask('Something went wrong while accessing to Bill.com services. ');
@@ -144,15 +144,20 @@ app.intent('bdc get recurring bills', async (conv) => {
 app.intent('bdc bills', async (conv, {type}) => {
     try {
         if (type == null || type == '') {
-            type == 'all';
+            type = 'all';
         }
         const response = await require('./BDCInterface/getApprovalsList')(type);
-        conv.ask(response[0]);
-        conv.ask(new Table({
-            dividers: true,
-            columns: response[1],
-            rows: response[2]
-        }))
+
+        if (response[2].length > 0) {
+            conv.ask(response[0]);
+            conv.ask(new Table({
+                dividers: true,
+                columns: response[1],
+                rows: response[2]
+            }));
+        } else {
+            conv.ask('You do not have '+type+' bills. ');
+        }
     } catch(e) {
         console.log(e);
         conv.ask('Something went wrong while accessing Bill.com services. ');
