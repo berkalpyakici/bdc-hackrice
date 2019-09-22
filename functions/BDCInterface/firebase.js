@@ -2,7 +2,7 @@ var firebase = require("firebase/app");
 
 require("firebase/database");
 
-const firebaseConfig = {
+const config = {
     apiKey: "AIzaSyCEHNKVgOOucgeRGvhBw6FR7DuZcUCdc1U",
     authDomain: "bdc-hackrice-hrkohb.firebaseapp.com",
     databaseURL: "https://bdc-hackrice-hrkohb.firebaseio.com",
@@ -14,7 +14,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(config);
 
-var database = firebase.database();
+
 
 function writeUserData(userId, name, email, imageUrl) {
     firebase.database().ref('users/' + userId).set({
@@ -23,5 +23,10 @@ function writeUserData(userId, name, email, imageUrl) {
         profile_picture : imageUrl
     });
 }
+var database = firebase.database();
+var starCountRef = database.ref('users/');
+starCountRef.on('value', function(snapshot) {
+    console.log(snapshot.val());
+});
 
-writeUserData("alovelace", "Ada Lovelace", "czhao028@gmail.com", "google.com");
+//writeUserData("alovelace", "Ada Lovelace", "czhao028@gmail.com", "google.com");
