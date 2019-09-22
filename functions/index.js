@@ -99,7 +99,7 @@ app.intent('normal ask', (conv) => {
 // Show Organization ID
 app.intent('bdc organization id', async (conv) => {
     try {
-        const response = await require('./BDCInterface/getSessionInfo.js')();
+        const response = await require('./BDCInterface/getSessionInfo')();
         conv.ask('Your Bill.com organization ID is ' + response['organizationId'] + '.');
     } catch (e) {
         console.log(e);
@@ -112,13 +112,13 @@ app.intent('bdc organization id', async (conv) => {
 // Vendor Invites
 app.intent('bdc vendor invites', async (conv) => {
     try {
-        const response = await require('./BDCInterface/vendorIndex').vendorStatus();
+        const response = await require('./BDCInterface/getVendorIndex').vendorStatus();
+        conv.ask(response[0]);
         conv.ask(new Table({
             dividers: true,
             columns: response[1],
             rows: response[2],
         }));
-        conv.ask(response[0]);
     } catch(e) {
         console.log(e);
         conv.ask('Something went wrong while accessing to Bill.com services.');
@@ -130,11 +130,11 @@ app.intent('bdc vendor invites', async (conv) => {
 //Show upcoming bills
 app.intent('bdc get recurring bills', async (conv) => {
   try {
-    const response = await require('./BDCInterface/getRecurringBills.js')();
+    const response = await require('./BDCInterface/getRecurringBills')();
     conv.ask("Here is a list of your upcoming bills.");
     conv.ask(new Table({
       dividers: true,
-      columns: ['Vendor', 'Amount', 'Due Date','Description'],
+      columns: ['Vendor', 'Amount', 'Due Date', 'Description'],
       rows: response,
     }));
   } catch(e) {
@@ -196,7 +196,6 @@ app.intent('Redirect to App', (conv) => {
   })),
   conv.ask(' ');
 });
-
 
 // Suggestions
 app.intent('suggestions', (conv) => {
