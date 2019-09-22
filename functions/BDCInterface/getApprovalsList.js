@@ -6,7 +6,7 @@
          3: approved
          5: denied
 */
-module.exports = function(inputStatus) {
+module.exports = async function(inputStatus) {
     try {
         const BDC = await require('./authentication.js')();
 
@@ -18,7 +18,7 @@ module.exports = function(inputStatus) {
             const response = await BDC.Bill.list({"approvalStatus": inputStatus, "sort": [{"field": "dueDate", "asc": 0}]});
         }
 
-        const strings = {6: "Here are all your bills sorted by approval:", 0: "Here are all your unassigned bills:", 1: "Here are all your assigned bills", 
+        const strings = {6: "Here are all your bills sorted by approval:", 0: "Here are all your unassigned bills:", 1: "Here are all your assigned bills",
                     4: "Here are all your bills that are being approved", 3: "Here are all your approved bills", 5: "Here are all your denied bills"};
         const columns = ["ID", "Amount", "Due Date", "Assigned"];
         var rows = [];
