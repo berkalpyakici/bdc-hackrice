@@ -35,6 +35,8 @@ const SELECTION_KEY_GOOGLE_ASSISTANT = 'googleAssistant';
 const SELECTION_KEY_GOOGLE_PAY = 'googlePay';
 const SELECTION_KEY_GOOGLE_PIXEL = 'googlePixel';
 const SELECTION_KEY_GOOGLE_HOME = 'googleHome';
+const APP_STORE_REDIRECT = 'appStore';
+const PLAY_STORE_REDIRECT = 'playStore';
 
 // Constant for image URLs
 const IMG_URL_AOG = 'https://storage.googleapis.com/actionsresources/logo_assistant_2x_64dp.png';
@@ -48,6 +50,8 @@ const SELECTED_ITEM_RESPONSES = {
   [SELECTION_KEY_GOOGLE_PAY]: 'You selected Google Pay!',
   [SELECTION_KEY_GOOGLE_PIXEL]: 'You selected Google Pixel!',
   [SELECTION_KEY_GOOGLE_HOME]: 'You selected Google Home!',
+  [APP_STORE_REDIRECT]: 'Check out bill.com in the App Store!',
+  [PLAY_STORE_REDIRECT]: 'Check out bill.com in the PlayStore!',
 };
 
 const intentSuggestions = [
@@ -157,6 +161,41 @@ app.intent('bdc bills', async (conv, {type}) => {
     conv.ask('Is there anything else?');
 });
 
+const appStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://apps.apple.com/us/app/bill-com/id980353334';
+const playStoreQR = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://play.google.com/store/apps/details?id=com.bdc.bill';
+
+//Redirect to app
+app.intent('Redirect to App', (conv) => {
+  conv.ask('Check out our app!');
+  conv.ask(new BasicCard({
+    text: 'To pay bills or see more account details on the go, use our app! Scan here for the Apple App Store.',
+    subtitle: 'Apple App Store',
+    title: 'Look at our App!',
+    buttons: new Button({
+      title: 'Click here or scan for the link',
+      url: 'https://apps.apple.com/us/app/bill-com/id980353334',
+    }),
+    image: new Image({
+      url: appStoreQR,
+      alt: 'App Store QR',
+    }),
+  })),
+  conv.ask(' ');
+  conv.ask(new BasicCard({
+    text: 'To pay bills or see more account details on the go, use our app! Scan here for the Google Play Store.',
+    subtitle: 'Google Play Store',
+    title: 'Look at our App!',
+    buttons: new Button({
+      title: 'Click here or scan for the link',
+      url: 'https://play.google.com/store/apps/details?id=com.bdc.bill',
+    }),
+    image: new Image({
+      url: playStoreQR,
+      alt: 'Play Store QR',
+    }),
+  })),
+  conv.ask(' ');
+});
 // Suggestions
 app.intent('suggestions', (conv) => {
   conv.ask('This is an example of suggestion chips.');
