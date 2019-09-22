@@ -93,7 +93,7 @@ app.intent('Default Welcome Intent', (conv) => {
 app.intent('bdc organization id', async (conv) => {
     try {
         const response = await require('./BDCInterface/getSessionInfo')();
-        conv.ask('Your Bill.com organization ID is ' + response['organizationId'] + '. ');
+        conv.ask('<speak>Your Bill.com organization ID is ' + '<say-as interpret-as="characters">'+response['organizationId'] + '</say-as>. </speak>');
     } catch (e) {
         console.log(e);
         conv.ask('Something went wrong while accessing to Bill.com services. ');
