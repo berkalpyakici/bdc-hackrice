@@ -12,22 +12,8 @@ module.exports = async function() {
             "sort" : []
         }
 
-        const rdata = await BDC.RecurringBill.list(params);
-        const data = await BDC.Bill.list(params);
-        for(var i=0;i<rdata.length;i++){
-          console.log(rdata[i]);
-            for(var j=0; j<rdata[i].recurringBillLineItems.length;j++){
-              datum = {"amount":rdata[i].recurringBillLineItems[j].amount,
-                       "vendorId":rdata[i].vendorId,
-                       "dueDate":rdata[i].nextDueDate,
-                       "description":rdata[i].recurringBillLineItems[j].description
-                     };
-              console.log(datum);
-              data.push(datum);
-            }
-
-
-        }
+        const data = await BDC.RecurringBill.list(params);
+        
         var list = [];
 
         for (var i=0; i < data.length; i++) {
