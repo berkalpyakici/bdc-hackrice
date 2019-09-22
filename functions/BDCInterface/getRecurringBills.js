@@ -18,9 +18,9 @@ module.exports = async function() {
 
         for (var i=0; i < data.length; i++) {
             const vendor = await BDC.Vendor.read(data[i].vendorId);
-            
+
             for(var j=0; j < data.length; j++){
-              list.push([vendor.name ? vendor.name : 'N/A', data[i].recurringBillLineItems[j].amount ? data[i].recurringBillLineItems[j].amount : 'N/A', data[i].nextDueDate,data[i].description ? data[i].nextDueDate,data[i].description : 'N/A]);
+              list.push([vendor.name ? vendor.name : 'N/A', data[i].recurringBillLineItems[j].amount ? data[i].recurringBillLineItems[j].amount : 'N/A', data[i].nextDueDate ? data[i].nextDueDate : 'N/A', data[i].description ? data[i].description : 'N/A']);
             }
         }
 
