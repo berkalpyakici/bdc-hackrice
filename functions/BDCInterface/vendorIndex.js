@@ -34,6 +34,8 @@ async function vendorStatus() {
     for(var vendor in vendors){
         var the_vendor = vendors[vendor];
         let netStat = await BDC.makeRequest(endpoint, JSON.stringify({"id": the_vendor.id}));
+        console.log(netStat);
+        console.log("returned");
         var row = [the_vendor.name, the_vendor.companyName, number_to_status[netStat.status]];
         original += "{} from the company {} is {} to your network.".format(row);
         console.log(original);
@@ -46,16 +48,16 @@ async function vendorAdded() {
 
 }
 
-// (async () => {
-//     try{
-//         let a = await vendorStatus();
-//         console.log("this is the past");
-//     }
-//     catch (err) {
-//         console.log(err);
+(async () => {
+    try{
+        let a = await vendorStatus();
+        console.log("a");
+    }
+    catch (err) {
+        console.log(err);
 
-//     }
-// })();
+    }
+})();
 
 exports.vendorStatus = vendorStatus;
 exports.getVendors = getVendors;

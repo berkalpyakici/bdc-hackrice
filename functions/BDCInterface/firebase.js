@@ -23,10 +23,43 @@ function writeUserData(userId, name, email, imageUrl) {
         profile_picture : imageUrl
     });
 }
+
+function writeNewPost(uid, username, picture, title, body) {
+    // A post entry.
+    var postData = {
+        author: username,
+        uid: uid,
+        body: body,
+        title: title,
+        starCount: 0,
+        authorPic: picture
+    };
+
+    // Get a key for a new Post.
+    var newPostKey = "1234556789";
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var updates = {};
+    updates['/posts/' + newPostKey] = postData;
+    updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+
+    return firebase.database().ref().update(updates);
+}
 var database = firebase.database();
-var starCountRef = database.ref('users/');
+var starCountRef = database.ref('/users');
 starCountRef.on('value', function(snapshot) {
-    console.log(snapshot.val());
+    console.log("this is it"+JSON.stringify(snapshot.val())+"updated");
 });
 
+
+writeNewPost("random_uid", "czhao028", "google.com/image/mariah", "Mariah Carey", {date: "today"});
+console.log("just created");
 //writeUserData("alovelace", "Ada Lovelace", "czhao028@gmail.com", "google.com");
+
+writeNewPost("random_uid", "christineyz1", "google.com/image/mariah", "Mariah Carey", {date: "today"});
+console.log("second");
+writeNewPost("random_uid", "czhao028", "google.com/image/mariah", "Mariah Carey", {date: "today"});
+console.log("third");
+//writeUserData("alovelace", "Ada", "czhao028@gmail.com", "google.com");
+//writeUserData("alove", "Ada", "czhao028@gmail.com", "google.com");
+//writeUserData("alove", "Ada", "czhao028@gmail.com", "tjhsst.edu");
